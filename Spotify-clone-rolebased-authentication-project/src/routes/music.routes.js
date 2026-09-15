@@ -4,6 +4,7 @@ const {
   createAlbum,
   getAllMusics,
   getAllAlbums,
+  getAlbumByAlbumId,
 } = require("../controllers/music.controller");
 const multer = require("multer");
 const { authArtist, authUser } = require("../middlewares/auth.middleware");
@@ -19,5 +20,7 @@ router.post("/album", authArtist, createAlbum);
 router.get("/", authUser, getAllMusics);
 
 router.get("/all-albums", authUser, getAllAlbums);
+
+router.get("/album/:albumId", authUser, getAlbumByAlbumId);
 
 module.exports = router;
