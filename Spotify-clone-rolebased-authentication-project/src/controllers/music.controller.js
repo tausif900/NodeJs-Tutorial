@@ -1,61 +1,64 @@
 const jwt = require("jsonwebtoken");
 const musicModel = require("../models/music.model");
 const uploadFile = require("../service/storage.service");
+const albumModel = require("../models/album.model");
 
 const createMusic = async (req, res) => {
-  // token nikalo
-  const token = req.cookies.token;
+  //  agr artist hai role to jo file user ne upload ki hai usko uplaod file method ko dedo, wo jo return krega usko result variable me daldo
+  const { title } = req.body;
+  const file = req.file;
 
-  // token nahi aya to ye return krdo
-  if (!token) {
-    return res.status(401).json({ message: "Unauthorized" });
-  }
+  console.log(file);
 
-  // agr token aya to usko verify kro
-  try {
-    // verify krne pe jo bhi obj aaega usme user ki id or role hai usko decoded variable dedo
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    console.log(decoded);
+  const result = await uploadFile(file.buffer.toString("base64"));
 
-    // role agr artist nhi hai to ye return krdo
-    if (decoded.role !== "artist") {
-      return res
-        .status(403)
-        .json({ message: "You don't have access to create a music" });
-    }
+  console.log(result);
 
-    //  agr artist hai role to jo file user ne upload ki hai usko uplaod file method ko dedo, wo jo return krega usko result variable me daldo
-    const { title } = req.body;
-    const file = req.file;
+  // ab music table jo db me hai usme ye sb save krdo
+  const music = await musicModel.create({
+    uri: result.url,
+    title,
+    artist: req.user.id,
+  });
 
-    console.log(file);
-
-    const result = await uploadFile(file.buffer.toString("base64"));
-
-    console.log(result);
-
-    // ab music table jo db me hai usme ye sb save krdo
-    const music = await musicModel.create({
-      uri: result.url,
-      title,
-      artist: decoded.id,
-    });
-
-    // or ye return krdo
-    res.status(201).json({
-      message: "Music Created",
-      music: {
-        id: music._id,
-        uri: music.uri,
-        title: music.title,
-        artist: music.artist,
-      },
-    });
-    // error aya to ye return krdo
-  } catch (error) {
-    console.log(error);
-    return res.status(401).json({ message: "Unauthorized" });
-  }
+  // or ye return krdo
+  res.status(201).json({
+    message: "Music Created",
+    music: {
+      id: music._id,
+      uri: music.uri,
+      title: music.title,
+      artist: music.artist,
+    },
+  });
+  // error aya to ye return krdo
 };
 
-module.exports = { createMusic };
+const createAlbum = async (req, res) => {
+  const { title, musics } = req.body;
+
+  const album = await albumModel.create({
+    title,
+    artist: req.user.id,
+    musics: musics,
+  });
+
+  res.status(201).json({
+    message: "Album Created Successfully",
+    album: {
+      id: album._id,
+      title: album.title,
+      artist: album.artist,
+      musics: album.musics,
+    },
+  });
+};
+
+const getAllMusics = async (req, res) => {
+  const musics = await musicModel.find().populate("artist");
+  res
+    .status(200)
+    .json({ message: "Musics fetch successfully", musics: musics });
+};
+
+module.exports = { createMusic, createAlbum, getAllMusics };
