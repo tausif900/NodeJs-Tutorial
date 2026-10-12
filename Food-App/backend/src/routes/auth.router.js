@@ -10,6 +10,7 @@ const {
 
 const router = express.Router();
 
+// User Auth APIs
 /**
  * - POST API - Registering the User in the Database
  * - Create a new User
@@ -29,6 +30,7 @@ router.post("/user-login", userLogin);
  */
 router.get("/user-logout", userLogout);
 
+// FoodPartner Auth APIs
 /**
  * - POST API - Registering the FoodPartner in the Database
  * - Create a FoodPartner
