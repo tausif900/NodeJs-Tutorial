@@ -1,6 +1,6 @@
 const cookieParser = require("cookie-parser");
 const express = require("express");
-const authRouter = require("./routes/auth.router");
+const authRoutes = require("./routes/auth.router");
 const app = express();
 
 app.use(express.json());
@@ -13,7 +13,7 @@ app.get("/", (req, res) => {
 /**
  * Authentication Middleware for Creating, Login, Logout User
  */
-app.use("/api/auth/", authRouter);
+app.use("/api/auth/", authRoutes);
 
 
 

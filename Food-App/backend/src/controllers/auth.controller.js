@@ -33,4 +33,28 @@ async function userRegistration(req, res) {
   });
 }
 
-module.exports = { userRegistration };
+const userLogin = async (req, res) => {
+  const { email, password } = req.body;
+
+  const user = await userModel.findOne({ email });
+
+  if (!user) {
+    return res.status(400).json({ message: "Invalid email or password" });
+  }
+
+  const isPasswordValid = await bcrypt.compare(password, user.password);
+
+  if (!isPasswordValid) {
+    return res.status(400).json({ message: "Invalid email or password" })
+  }
+
+  const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET_KEY);
+
+  res.cookie("token", token);
+
+  res.status(200).json({
+    message: "User Login Successfully",
+  });
+};
+
+module.exports = { userRegistration, userLogin };
