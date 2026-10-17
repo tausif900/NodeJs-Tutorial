@@ -64,7 +64,7 @@ const userLogout = async (req, res) => {
 };
 
 const foodPartnerRegister = async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, contactName, phoneNumber, email, password } = req.body;
 
   const isUserAlreadyExists = await foodPartnerModel.findOne({ email });
 
@@ -79,6 +79,8 @@ const foodPartnerRegister = async (req, res) => {
   const foodPartner = await foodPartnerModel.create({
     name,
     email,
+    contactName,
+    phoneNumber,
     password: hashedPassword,
   });
 
@@ -93,6 +95,8 @@ const foodPartnerRegister = async (req, res) => {
     message: "Food Partner Registered Successfully",
     foodPartner: {
       _id: foodPartner._id,
+      contactName: foodPartner.contactName,
+      phoneNumber: foodPartner.phoneNumber,
       name: foodPartner.name,
       email: foodPartner.email,
     },
