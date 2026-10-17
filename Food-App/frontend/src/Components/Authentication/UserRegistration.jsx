@@ -1,7 +1,24 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import axios from "axios";
 
 const UserRegistration = () => {
+  const { register, handleSubmit, watch } = useForm();
+
+  const addUser = async (data) => {
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/api/auth/user-register",
+        data,
+      );
+      console.log(response.data);
+      alert("User Registered Successfully!!!");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
       <div
@@ -43,12 +60,21 @@ const UserRegistration = () => {
                     <h2 className="fw-bold" style={{ color: "#183D2B" }}>
                       Create your account
                     </h2>
+
                     <p className="text-secondary small">
                       Delicious food and happy moments start here.
                     </p>
+                    <span>
+                      <Link
+                        to={"/food-partner-registration"}
+                        className="text-decoration-none  text-muted small fw-bold"
+                      >
+                        Continue as Food Partner
+                      </Link>
+                    </span>
                   </div>
 
-                  <form>
+                  <form onSubmit={handleSubmit(addUser)}>
                     <div className="mb-3">
                       <label className="form-label fw-semibold small">
                         Full Name
@@ -61,6 +87,7 @@ const UserRegistration = () => {
                           type="text"
                           className="form-control border-start-0 py-2"
                           placeholder="Enter your full name"
+                          {...register("fullName")}
                         />
                       </div>
                     </div>
@@ -77,6 +104,7 @@ const UserRegistration = () => {
                           type="email"
                           className="form-control border-start-0 py-2"
                           placeholder="you@example.com"
+                          {...register("email")}
                         />
                       </div>
                     </div>
@@ -93,6 +121,7 @@ const UserRegistration = () => {
                           type="password"
                           className="form-control border-start-0 py-2"
                           placeholder="Create a password"
+                          {...register("password")}
                         />
                       </div>
                     </div>
@@ -135,7 +164,7 @@ const UserRegistration = () => {
                     </div>
 
                     <button
-                      type="button"
+                      type="submit"
                       className="btn w-100 text-white fw-semibold py-3"
                       style={{
                         background: "#F97316",

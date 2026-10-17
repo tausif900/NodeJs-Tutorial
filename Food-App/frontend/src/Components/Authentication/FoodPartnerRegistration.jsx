@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const FoodPartnerRegistration = () => {
   return (
@@ -49,102 +50,142 @@ const FoodPartnerRegistration = () => {
                       Bring your delicious food to more customers and grow your
                       business with us.
                     </p>
+                    <span>
+                      <Link
+                        to={"/user-registration"}
+                        className="text-decoration-none  text-muted small fw-bold"
+                      >
+                        Continue as Normal User
+                      </Link>
+                    </span>
                   </div>
 
-                  <form>
-                    <div className="mb-3">
-                      <label className="form-label fw-semibold small">
-                        Owner Name
-                      </label>
-                      <div className="input-group">
-                        <span className="input-group-text bg-white border-end-0">
-                          <i className="bi bi-person text-secondary"></i>
-                        </span>
+                  <form className="row">
+                    <div className="col">
+                      {" "}
+                      <div className="mb-3">
+                        <label className="form-label fw-semibold small">
+                          Restaurant / Business Name
+                        </label>
+                        <div className="input-group">
+                          <span className="input-group-text bg-white border-end-0">
+                            <i className="bi bi-shop text-secondary"></i>
+                          </span>
+                          <input
+                            type="text"
+                            className="form-control border-start-0 py-2"
+                            placeholder="Enter business name"
+                          />
+                        </div>
+                      </div>
+                      <div className="mb-3">
+                        <label className="form-label fw-semibold small">
+                          Owner Name
+                        </label>
+                        <div className="input-group">
+                          <span className="input-group-text bg-white border-end-0">
+                            <i className="bi bi-person text-secondary"></i>
+                          </span>
+                          <input
+                            type="text"
+                            className="form-control border-start-0 py-2"
+                            placeholder="Enter owner's full name"
+                          />
+                        </div>
+                      </div>
+                      <div className="mb-3">
+                        <label className="form-label fw-semibold small">
+                          Business Email
+                        </label>
+                        <div className="input-group">
+                          <span className="input-group-text bg-white border-end-0">
+                            <i className="bi bi-envelope text-secondary"></i>
+                          </span>
+                          <input
+                            type="email"
+                            className="form-control border-start-0 py-2"
+                            placeholder="business@example.com"
+                          />
+                        </div>
+                      </div>
+                      <div className="form-check mb-4">
                         <input
-                          type="text"
-                          className="form-control border-start-0 py-2"
-                          placeholder="Enter owner's full name"
+                          className="form-check-input"
+                          type="checkbox"
+                          id="partnerTerms"
                         />
+                        <label
+                          className="form-check-label small text-secondary"
+                          htmlFor="partnerTerms"
+                        >
+                          I agree to the{" "}
+                          <a href="#" style={{ color: "#6D28D9" }}>
+                            Partner Terms
+                          </a>{" "}
+                          and Privacy Policy.
+                        </label>
                       </div>
                     </div>
 
-                    <div className="mb-3">
-                      <label className="form-label fw-semibold small">
-                        Business Email
-                      </label>
-                      <div className="input-group">
-                        <span className="input-group-text bg-white border-end-0">
-                          <i className="bi bi-envelope text-secondary"></i>
-                        </span>
-                        <input
-                          type="email"
-                          className="form-control border-start-0 py-2"
-                          placeholder="business@example.com"
-                        />
+                    <div className="col">
+                      {" "}
+                      <div className="mb-3">
+                        <label className="form-label fw-semibold small">
+                          Contact Number
+                        </label>
+                        <div className="input-group">
+                          <span className="input-group-text bg-white border-end-0">
+                            <i className="bi bi-telephone text-secondary"></i>
+                          </span>
+                          <input
+                            type="tel"
+                            className="form-control border-start-0 py-2"
+                            placeholder="Enter contact number"
+                          />
+                        </div>
                       </div>
-                    </div>
-
-                    <div className="mb-3">
-                      <label className="form-label fw-semibold small">
-                        Password
-                      </label>
-                      <div className="input-group">
-                        <span className="input-group-text bg-white border-end-0">
-                          <i className="bi bi-lock text-secondary"></i>
-                        </span>
-                        <input
-                          type="password"
-                          className="form-control border-start-0 py-2"
-                          placeholder="Create a password"
-                        />
+                      <div className="mb-3">
+                        <label className="form-label fw-semibold small">
+                          Password
+                        </label>
+                        <div className="input-group">
+                          <span className="input-group-text bg-white border-end-0">
+                            <i className="bi bi-lock text-secondary"></i>
+                          </span>
+                          <input
+                            type="password"
+                            className="form-control border-start-0 py-2"
+                            placeholder="Create a password"
+                          />
+                        </div>
                       </div>
-                    </div>
-
-                    <div className="mb-4">
-                      <label className="form-label fw-semibold small">
-                        Confirm Password
-                      </label>
-                      <div className="input-group">
-                        <span className="input-group-text bg-white border-end-0">
-                          <i className="bi bi-shield-check text-secondary"></i>
-                        </span>
-                        <input
-                          type="password"
-                          className="form-control border-start-0 py-2"
-                          placeholder="Confirm your password"
-                        />
+                      <div className="mb-4">
+                        <label className="form-label fw-semibold small">
+                          Confirm Password
+                        </label>
+                        <div className="input-group">
+                          <span className="input-group-text bg-white border-end-0">
+                            <i className="bi bi-shield-check text-secondary"></i>
+                          </span>
+                          <input
+                            type="password"
+                            className="form-control border-start-0 py-2"
+                            placeholder="Confirm your password"
+                          />
+                        </div>
                       </div>
-                    </div>
-
-                    <div className="form-check mb-4">
-                      <input
-                        className="form-check-input"
-                        type="checkbox"
-                        id="partnerTerms"
-                      />
-                      <label
-                        className="form-check-label small text-secondary"
-                        htmlFor="partnerTerms"
+                      <button
+                        type="button"
+                        className="btn w-100 text-white fw-semibold py-3"
+                        style={{
+                          background: "#6D45C5",
+                          borderRadius: "12px",
+                        }}
                       >
-                        I agree to the{" "}
-                        <a href="#" style={{ color: "#6D28D9" }}>
-                          Partner Terms
-                        </a>{" "}
-                        and Privacy Policy.
-                      </label>
+                        Create Partner Account
+                        <i className="bi bi-arrow-right ms-2"></i>
+                      </button>
                     </div>
-
-                    <button
-                      type="button"
-                      className="btn w-100 text-white fw-semibold py-3"
-                      style={{
-                        background: "#6D45C5",
-                        borderRadius: "12px",
-                      }}
-                    >
-                      Create Partner Account
-                      <i className="bi bi-arrow-right ms-2"></i>
-                    </button>
                   </form>
 
                   <div className="text-center mt-4">
