@@ -1,7 +1,17 @@
 import React from "react";
+import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 
 const AddFood = () => {
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
+
+  
+
   return (
     <main className="container-fluid min-vh-100 bg-light py-4 py-lg-5">
       <nav className="container d-flex justify-content-between align-items-center mb-5">
