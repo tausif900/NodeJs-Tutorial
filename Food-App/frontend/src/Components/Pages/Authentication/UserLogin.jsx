@@ -1,7 +1,19 @@
 import React from "react";
+import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 
 const UserLogin = () => {
+  const {
+    register,
+    watch,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const userLogin = (data) => {
+    console.log(data);
+  };
+
   return (
     <>
       {" "}
@@ -50,7 +62,7 @@ const UserLogin = () => {
                     </p>
                   </div>
 
-                  <form>
+                  <form onSubmit={handleSubmit(userLogin)}>
                     <div className="mb-4">
                       <label className="form-label fw-semibold small">
                         Email Address
@@ -65,7 +77,13 @@ const UserLogin = () => {
                           type="email"
                           className="form-control border-start-0 py-3"
                           placeholder="Enter your email address"
+                          {...register("email", {
+                            required: "email is required",
+                          })}
                         />
+                        <span className="text-danger">
+                          {errors.email && errors.email.message}
+                        </span>
                       </div>
                     </div>
 
@@ -83,7 +101,13 @@ const UserLogin = () => {
                           type="password"
                           className="form-control border-start-0 py-3"
                           placeholder="Enter your password"
+                          {...register("password", {
+                            required: "password is required",
+                          })} 
                         />
+                        <span className="text-danger">
+                          {errors.password && errors.password.message}
+                        </span>
                       </div>
                     </div>
 
@@ -112,7 +136,7 @@ const UserLogin = () => {
                     </div>
 
                     <button
-                      type="button"
+                      type="submit"
                       className="btn w-100 text-white fw-semibold py-3"
                       style={{
                         background: "#F97316",

@@ -1,19 +1,30 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 
 const UserRegistration = () => {
-  const { register, handleSubmit, watch } = useForm();
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
+
+  const navigate = useNavigate();
+
+  const password = watch("password");
 
   const addUser = async (data) => {
     try {
       const response = await axios.post(
         "http://localhost:3000/api/auth/user-register",
         data,
+        { withCredentials: true },
       );
       console.log(response.data);
       alert("User Registered Successfully!!!");
+      navigate("/");
     } catch (error) {
       console.log(error);
     }
@@ -138,7 +149,18 @@ const UserRegistration = () => {
                           type="password"
                           className="form-control border-start-0 py-2"
                           placeholder="Re-enter your password"
+                          {...register("confirmPassword", {
+                            required: "Please confirm your password",
+                            validate: (value) => {
+                              value === password || "Passwords do not match";
+                            },
+                          })}
                         />
+                        {errors.confirmPassword && (
+                          <p className="text-danger">
+                            {errors.confirmPassword.message}
+                          </p>
+                        )}
                       </div>
                     </div>
 
