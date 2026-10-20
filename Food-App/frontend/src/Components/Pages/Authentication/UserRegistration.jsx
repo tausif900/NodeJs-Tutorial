@@ -156,12 +156,12 @@ const UserRegistration = () => {
                             },
                           })}
                         />
-                        {errors.confirmPassword && (
-                          <p className="text-danger">
-                            {errors.confirmPassword.message}
-                          </p>
-                        )}
                       </div>
+                      {errors.confirmPassword && (
+                        <small className="text-danger">
+                          {errors.confirmPassword.message}
+                        </small>
+                      )}
                     </div>
 
                     <div className="form-check mb-4">

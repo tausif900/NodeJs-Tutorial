@@ -1,6 +1,32 @@
+import axios from "axios";
 import React from "react";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
 const FoodPartnerLogin = () => {
+  const navigate = useNavigate();
+  
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
+
+  const partnerLogin = async (data) => {
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/api/auth/food-partner-login",
+        data,
+        { withCredentials: true },
+      );
+      console.log(response.data);
+      navigate("/add-food-items");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
       <div
@@ -51,7 +77,7 @@ const FoodPartnerLogin = () => {
                     </p>
                   </div>
 
-                  <form>
+                  <form onSubmit={handleSubmit(partnerLogin)}>
                     <div className="mb-4">
                       <label className="form-label fw-semibold small">
                         Business Email
@@ -64,6 +90,7 @@ const FoodPartnerLogin = () => {
                           type="email"
                           className="form-control border-start-0 py-3"
                           placeholder="Enter your business email"
+                          {...register("email")}
                         />
                       </div>
                     </div>
@@ -80,6 +107,7 @@ const FoodPartnerLogin = () => {
                           type="password"
                           className="form-control border-start-0 py-3"
                           placeholder="Enter your password"
+                          {...register("password")}
                         />
                       </div>
                     </div>
@@ -109,7 +137,7 @@ const FoodPartnerLogin = () => {
                     </div>
 
                     <button
-                      type="button"
+                      type="submit"
                       className="btn w-100 text-white fw-semibold py-3"
                       style={{
                         background: "#6D45C5",

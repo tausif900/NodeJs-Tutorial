@@ -5,6 +5,7 @@ import UserLogin from "./Components/Pages/Authentication/UserLogin";
 import FoodPartnerRegistration from "./Components/Pages/Authentication/FoodPartnerRegistration";
 import FoodPartnerLogin from "./Components/Pages/Authentication/FoodPartnerLogin";
 import Home from "./Components/Pages/general/Home";
+import AddFood from "./Components/Pages/general/AddFood";
 
 const router = createBrowserRouter([
   {
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
   {
     path: "/food-partner-login",
     element: <FoodPartnerLogin />,
+  },
+  {
+    path: "/add-food-items",
+    element: <AddFood />,
   },
 ]);
 

@@ -1,7 +1,32 @@
+import axios from "axios";
 import React from "react";
-import { Link } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { Link, useNavigate } from "react-router-dom";
 
 const FoodPartnerRegistration = () => {
+  const navigate = useNavigate();
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
+
+  const registerFoodPartner = async (data) => {
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/api/auth/food-partner-register",
+        data,
+        { withCredentials: true },
+      );
+      console.log(response.data);
+      alert("Food Partner Added Successfully!!!");
+      navigate("/add-food-items");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
       <div
@@ -60,7 +85,10 @@ const FoodPartnerRegistration = () => {
                     </span>
                   </div>
 
-                  <form className="row">
+                  <form
+                    className="row"
+                    onSubmit={handleSubmit(registerFoodPartner)}
+                  >
                     <div className="col">
                       {" "}
                       <div className="mb-3">
@@ -75,6 +103,7 @@ const FoodPartnerRegistration = () => {
                             type="text"
                             className="form-control border-start-0 py-2"
                             placeholder="Enter business name"
+                            {...register("name")}
                           />
                         </div>
                       </div>
@@ -90,6 +119,7 @@ const FoodPartnerRegistration = () => {
                             type="text"
                             className="form-control border-start-0 py-2"
                             placeholder="Enter owner's full name"
+                            {...register("contactName")}
                           />
                         </div>
                       </div>
@@ -105,6 +135,7 @@ const FoodPartnerRegistration = () => {
                             type="email"
                             className="form-control border-start-0 py-2"
                             placeholder="business@example.com"
+                            {...register("email")}
                           />
                         </div>
                       </div>
@@ -141,6 +172,7 @@ const FoodPartnerRegistration = () => {
                             type="tel"
                             className="form-control border-start-0 py-2"
                             placeholder="Enter contact number"
+                            {...register("phoneNumber")}
                           />
                         </div>
                       </div>
@@ -156,6 +188,7 @@ const FoodPartnerRegistration = () => {
                             type="password"
                             className="form-control border-start-0 py-2"
                             placeholder="Create a password"
+                            {...register("password")}
                           />
                         </div>
                       </div>
@@ -171,11 +204,12 @@ const FoodPartnerRegistration = () => {
                             type="password"
                             className="form-control border-start-0 py-2"
                             placeholder="Confirm your password"
+                            {...register("confirmPassword")}
                           />
                         </div>
                       </div>
                       <button
-                        type="button"
+                        type="submit"
                         className="btn w-100 text-white fw-semibold py-3"
                         style={{
                           background: "#6D45C5",

@@ -1,8 +1,10 @@
+import axios from "axios";
 import React from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const UserLogin = () => {
+  const navigate = useNavigate();
   const {
     register,
     watch,
@@ -10,13 +12,24 @@ const UserLogin = () => {
     formState: { errors },
   } = useForm();
 
-  const userLogin = (data) => {
-    console.log(data);
+  const userLogin = async (data) => {
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/api/auth/user-login",
+        data,
+        {
+          withCredentials: true,
+        },
+      );
+      console.log(response.data);
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
     <>
-      {" "}
       <div
         className="container-fluid min-vh-100 d-flex align-items-center py-5"
         style={{
@@ -81,10 +94,10 @@ const UserLogin = () => {
                             required: "email is required",
                           })}
                         />
-                        <span className="text-danger">
-                          {errors.email && errors.email.message}
-                        </span>
                       </div>
+                      <small className="text-danger">
+                        {errors.email && errors.email.message}
+                      </small>
                     </div>
 
                     <div className="mb-3">
@@ -103,12 +116,12 @@ const UserLogin = () => {
                           placeholder="Enter your password"
                           {...register("password", {
                             required: "password is required",
-                          })} 
+                          })}
                         />
-                        <span className="text-danger">
-                          {errors.password && errors.password.message}
-                        </span>
                       </div>
+                      <small className="text-danger">
+                        {errors.password && errors.password.message}
+                      </small>
                     </div>
 
                     <div className="d-flex justify-content-between align-items-center mb-4">
