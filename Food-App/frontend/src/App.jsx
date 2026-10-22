@@ -6,6 +6,7 @@ import FoodPartnerRegistration from "./Components/Pages/Authentication/FoodPartn
 import FoodPartnerLogin from "./Components/Pages/Authentication/FoodPartnerLogin";
 import Home from "./Components/Pages/general/Home";
 import AddFood from "./Components/Pages/general/AddFood";
+import FoodPartner from "./Components/Pages/general/FoodPartner";
 
 const router = createBrowserRouter([
   {
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
   {
     path: "/add-food-items",
     element: <AddFood />,
+  },
+  {
+    path: "/food-partner/:foodPartnerId",
+    element: <FoodPartner />,
   },
 ]);
 

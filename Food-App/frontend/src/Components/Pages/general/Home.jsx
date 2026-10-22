@@ -2,9 +2,10 @@ import axios from "axios";
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Home = () => {
+  const navigate = useNavigate();
   const [foodItems, setFoodItems] = useState([]);
 
   const fetchFoodItems = async () => {
@@ -43,6 +44,7 @@ const Home = () => {
             }}
           >
             <video
+              key={item._id}
               className="position-absolute top-0 start-0 w-100 h-100"
               style={{ objectFit: "cover" }}
               src={item.foodVideo}
@@ -70,6 +72,7 @@ const Home = () => {
                 <Link
                   to={`/food-partner/${item.foodPartner}`}
                   className="btn btn-light btn-sm fw-semibold flex-shrink-0"
+                  onClick={() => navigate(`/food-partner/${item.foodPartner}`)}
                 >
                   View partner
                 </Link>
