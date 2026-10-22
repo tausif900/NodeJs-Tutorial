@@ -1,8 +1,9 @@
 const cookieParser = require("cookie-parser");
 const express = require("express");
 const authRoutes = require("./routes/auth.router");
-const foodItemsRouter = require("./routes/foodItem.router");
+const foodItemsRoutes = require("./routes/foodItem.router");
 const cors = require("cors");
+const foodPartnerRoutes = require("./routes/foodPartner.router");
 
 const app = express();
 
@@ -22,8 +23,10 @@ app.get("/", (req, res) => {
 /**
  * Authentication Middleware for Creating, Login, Logout User
  */
-app.use("/api/auth/", authRoutes);
+app.use("/api/auth", authRoutes);
 
-app.use("/api/food", foodItemsRouter);
+app.use("/api/food", foodItemsRoutes);
+
+app.use("/api",foodPartnerRoutes)
 
 module.exports = app;
