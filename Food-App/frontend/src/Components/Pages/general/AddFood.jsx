@@ -1,8 +1,11 @@
-import React from "react";
+import axios from "axios";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 
 const AddFood = () => {
+  const [videoName, setVideoName] = useState("");
+
   const {
     register,
     handleSubmit,
@@ -10,7 +13,25 @@ const AddFood = () => {
     formState: { errors },
   } = useForm();
 
-  
+  const addFoodItem = async (data) => {
+    try {
+      const formData = new FormData();
+      formData.append("name", data.foodName);
+      formData.append("description", data.description);
+      formData.append("video", data.video[0]);
+
+      const response = await axios.post(
+        "http://localhost:3000/api/food/add-food-items",
+        formData,
+        {
+          withCredentials: true,
+        },
+      );
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <main className="container-fluid min-vh-100 bg-light py-4 py-lg-5">
@@ -95,7 +116,7 @@ const AddFood = () => {
                   </span>
                 </div>
 
-                <form>
+                <form onSubmit={handleSubmit(addFoodItem)}>
                   <div className="mb-4">
                     <label
                       htmlFor="foodName"
@@ -108,6 +129,7 @@ const AddFood = () => {
                       type="text"
                       className="form-control form-control-lg"
                       placeholder="e.g. Grandma’s Sunday lasagna"
+                      {...register("foodName")}
                     />
                     <div className="form-text">
                       Give your dish a name people will remember.
@@ -126,6 +148,7 @@ const AddFood = () => {
                       className="form-control"
                       rows="4"
                       placeholder="What makes it special? Ingredients, a family story, or that perfect finishing touch…"
+                      {...register("description")}
                     />
                     <div className="form-text">
                       Keep it warm, short, and full of flavor.
@@ -133,29 +156,57 @@ const AddFood = () => {
                   </div>
 
                   <div className="mb-4">
-                    <label
-                      htmlFor="foodVideo"
-                      className="form-label fw-semibold"
-                    >
+                    <label htmlFor="video" className="form-label fw-semibold">
                       Show us the good stuff{" "}
                       <span className="text-danger">*</span>
                     </label>
-                    <input
-                      id="foodVideo"
-                      className="form-control"
-                      type="file"
-                      accept="video/*"
-                    />
-                    <div className="form-text">
-                      Choose a video of your dish to include in the post.
+                    <label
+                      htmlFor="video"
+                      className="d-flex flex-column align-items-center justify-content-center text-center border border-2 border-dashed rounded-4 p-4 p-md-5 bg-light"
+                      style={{
+                        cursor: "pointer",
+                        transition: "all 180ms ease",
+                      }}
+                    >
+                      <span
+                        className="d-flex align-items-center justify-content-center rounded-circle bg-warning-subtle text-warning-emphasis mb-3"
+                        style={{ width: 56, height: 56, fontSize: 25 }}
+                        aria-hidden="true"
+                      >
+                        {videoName ? "✓" : "↑"}
+                      </span>
+                      <span className="fw-semibold text-dark">
+                        {videoName
+                          ? "Video ready to upload"
+                          : "Choose a food video"}
+                      </span>
+                      <span className="small text-secondary mt-1">
+                        {videoName || "Click to browse your files"}
+                      </span>
+                      <span className="small text-secondary mt-2">
+                        MP4, MOV or WebM · Keep it short and appetizing
+                      </span>
+                      <input
+                        id="video"
+                        className="visually-hidden"
+                        type="file"
+                        accept="video/*"
+                        onChange={(e) => {
+                          setVideoName(e.target.files?.[0]?.name ?? "");
+                        }}
+                        aria-describedby="foodVideoHelp"
+                      />
+                    </label>
+                    <div id="foodVideoHelp" className="form-text mt-2">
+                      Add a clip that shows your dish at its best.
                     </div>
                   </div>
 
                   <button
-                    type="button"
+                    type="submit"
                     className="btn btn-warning btn-lg w-100 fw-semibold text-white"
                   >
-                    Publish food post <span className="ms-2">↗</span>
+                    Publish food Item <span className="ms-2">↗</span>
                   </button>
                   <p className="small text-secondary text-center mt-3 mb-0">
                     ✦ Made with care, served to the neighborhood.
