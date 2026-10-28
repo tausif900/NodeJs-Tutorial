@@ -14,15 +14,31 @@ const Home = () => {
         "http://localhost:3000/api/food/get-food-items",
         { withCredentials: true },
       );
+      console.log(response.data);
       setFoodItems(response.data.foodItems);
     } catch (error) {
       console.log(error);
     }
   };
 
+  const likeFoodItem = async (item) => {
+    console.log(item);
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/api/food/like-food-item",
+        { foodItem: item._id },
+        { withCredentials: true },
+      );
+      fetchFoodItems();
+    } catch (error) {
+      console.log(error);
+      alert("Something went wrong");
+    }
+  };
+
   useEffect(() => {
     fetchFoodItems();
-  });
+  }, []);
 
   return (
     <main
@@ -63,6 +79,9 @@ const Home = () => {
                 type="button"
                 className="border-0 bg-transparent text-white p-0"
                 aria-label="Like"
+                onClick={() => {
+                  likeFoodItem(item);
+                }}
               >
                 <svg
                   width="30"
@@ -78,7 +97,7 @@ const Home = () => {
                   <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78Z" />
                 </svg>
               </button>
-              <small className="text-primary">likes</small>
+              <small className="text-black">likes : {item.likesCount}</small>
               <button
                 type="button"
                 className="border-0 bg-transparent text-white p-0"
@@ -98,7 +117,7 @@ const Home = () => {
                   <path d="M19 21l-7-5-7 5V3h14v18Z" />
                 </svg>
               </button>
-              <small className="text-primary">save</small>
+              <small className="text-black">save</small>
             </div>
 
             <div
