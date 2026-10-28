@@ -56,6 +56,52 @@ const Home = () => {
             />
 
             <div
+              className="position-absolute end-0 d-flex flex-column gap-3 p-4"
+              style={{ bottom: "10rem", zIndex: 1 }}
+            >
+              <button
+                type="button"
+                className="border-0 bg-transparent text-white p-0"
+                aria-label="Like"
+              >
+                <svg
+                  width="30"
+                  height="30"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78Z" />
+                </svg>
+              </button>
+              <small className="text-primary">likes</small>
+              <button
+                type="button"
+                className="border-0 bg-transparent text-white p-0"
+                aria-label="Save"
+              >
+                <svg
+                  width="30"
+                  height="30"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M19 21l-7-5-7 5V3h14v18Z" />
+                </svg>
+              </button>
+              <small className="text-primary">save</small>
+            </div>
+
+            <div
               className="position-absolute bottom-0 start-0 w-100 p-4 text-white"
               style={{
                 background: "linear-gradient(transparent, rgba(0, 0, 0, 0.82))",

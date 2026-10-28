@@ -1,9 +1,10 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const AddFood = () => {
+  const navigate = useNavigate();
   const [videoName, setVideoName] = useState("");
 
   const {
@@ -28,6 +29,8 @@ const AddFood = () => {
         },
       );
       console.log(response.data);
+      alert("Food Item Posted");
+      navigate("/");
     } catch (error) {
       console.log(error);
     }
@@ -191,10 +194,12 @@ const AddFood = () => {
                         className="visually-hidden"
                         type="file"
                         accept="video/*"
-                        onChange={(e) => {
-                          setVideoName(e.target.files?.[0]?.name ?? "");
-                        }}
                         aria-describedby="foodVideoHelp"
+                        {...register("video", {
+                          onChange: (e) => {
+                            setVideoName(e.target.files?.[0]?.name ?? "");
+                          },
+                        })}
                       />
                     </label>
                     <div id="foodVideoHelp" className="form-text mt-2">
