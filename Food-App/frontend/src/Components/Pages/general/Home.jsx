@@ -36,6 +36,19 @@ const Home = () => {
     }
   };
 
+  const saveFoodItem = async (item) => {
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/api/food/save-food-item",
+        { foodItem: item._id },
+        { withCredentials: true },
+      );
+      fetchFoodItems();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     fetchFoodItems();
   }, []);
@@ -49,7 +62,7 @@ const Home = () => {
         scrollSnapType: "y mandatory",
       }}
     >
-      {foodItems.map((item) => {
+      {foodItems.map((item, idx) => {
         return (
           <article
             className="position-relative mx-auto overflow-hidden"
@@ -102,6 +115,9 @@ const Home = () => {
                 type="button"
                 className="border-0 bg-transparent text-white p-0"
                 aria-label="Save"
+                onClick={() => {
+                  saveFoodItem(item);
+                }}
               >
                 <svg
                   width="30"
@@ -117,7 +133,7 @@ const Home = () => {
                   <path d="M19 21l-7-5-7 5V3h14v18Z" />
                 </svg>
               </button>
-              <small className="text-black">save</small>
+              <small className="text-black">Save : {item.saveCount}</small>
             </div>
 
             <div
